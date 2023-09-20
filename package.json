@@ -1,0 +1,28 @@
+{
+  "name": "apiproyectoexpresslabo4",
+  "version": "1.0.0",
+  "description": "proyecto de api para laboratorio de computacion 4",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xabier456/ApiProyectoExpressLabo4.git"
+  },
+  "author": "Xabier Bascunan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xabier456/ApiProyectoExpressLabo4/issues"
+  },
+  "homepage": "https://github.com/Xabier456/ApiProyectoExpressLabo4#readme",
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "^1.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "request": "^2.88.2"
+  }
+}
