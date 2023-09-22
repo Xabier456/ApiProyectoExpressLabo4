@@ -78,9 +78,9 @@ const getJuegos = (req = request, res = response) => {
 //recibir el canal en directo con mas espectadores de un juego especifico
 const getTopCanalJuego = (req = request, res = response) => {
     const { API_KEY, CLIENT_ID } = process.env;
-    const { game_id } = req.query;
-    console.log(game_id)
-    axios.get(`https://api.twitch.tv/helix/streams?game_id=${game_id}`, {
+    const { id } = req.params;
+    console.log(id)
+    axios.get(`https://api.twitch.tv/helix/streams?game_id=${id}`, {
         headers: {
             "client-id": CLIENT_ID,
             "Authorization": "Bearer " + API_KEY,
@@ -109,13 +109,41 @@ const getTopCanalJuego = (req = request, res = response) => {
         );
 }
 
+//recibir los 20 canales mas visto dependiendo del juego y el idioma
+const getTopCanalesJuegoIdioma = (req = request, res = response) => {
+    const { API_KEY, CLIENT_ID } = process.env;
+    const { id, idioma } = req.params;
+    axios.get(`https://api.twitch.tv/helix/streams?game_id=${id}&language=${idioma}`, {
+        headers: {
+            "client-id": CLIENT_ID,
+            "Authorization": "Bearer " + API_KEY,
+        }
+    })
+        .then(({ status, data }) => {
+            res.status(200).json({
+                status,
+                data
+            });
+        })
+        .catch((error)=>{
+            if (error.response.status === 401) {
+                res.status(401).json({
+                    status:401,
+                    mensaje: 'Error en el token'
+            })
+            } else if (error.response.status === 400) {
+                res.status(400).json({
+                    status:400,
+                    mensaje: 'la id de juego o el idioma no existe'
+            })
+            }
+        }
+        );
+}
+
 
 module.exports = {
-    getPeliculas,
-    getEstrenos,
-    getActores,
-    getPelicula,
-    getOrigenNombre,
     getJuegos,
-    getTopCanalJuego
+    getTopCanalJuego,
+    getTopCanalesJuegoIdioma
 };
