@@ -14,12 +14,6 @@ const getPelicula = (req = request, res = response) => {
     res.json({name: `Pelicula con ID: ${id}`});
 }
 
-const getJuegos = (req = request, res = response) => {  
-    const {id} = req.params;
-    console.log(id);
-    res.json({name: `Pelicula con ID: ${id}`});
-}
-
 
 const getEstrenos = (req = request, res = response) => {
     res.json({name: 'Estrenos'});
@@ -50,10 +44,69 @@ const getOrigenNombre = (req = request, res = response) => {
             res.status(400).json({
                 status:400,
                 msg: 'Error inesperado'
-            });
+            })
         });        
 
     
+}
+
+//recibir los actuales 50 juegos mas jugados de twitch api
+const getJuegos = (req = request, res = response) => {
+    const { API_KEY, CLIENT_ID } = process.env;
+    axios.get(`https://api.twitch.tv/helix/games/top?first=50`, {
+        headers: {
+            "client-id": CLIENT_ID,
+            "Authorization": "Bearer " + API_KEY,
+        }
+    })
+        .then(({ status, data }) => {
+            res.status(200).json({
+                status,
+                data
+            });
+        })
+        .catch((error)=>{
+        if (error.response.status === 401) {
+            res.status(401).json({
+                status:401,
+                mensaje: 'Error en el token'
+            })
+        }
+        });
+}
+
+//recibir el canal en directo con mas espectadores de un juego especifico
+const getTopCanalJuego = (req = request, res = response) => {
+    const { API_KEY, CLIENT_ID } = process.env;
+    const { game_id } = req.query;
+    console.log(game_id)
+    axios.get(`https://api.twitch.tv/helix/streams?game_id=${game_id}`, {
+        headers: {
+            "client-id": CLIENT_ID,
+            "Authorization": "Bearer " + API_KEY,
+        }
+    })
+        .then(({ status, data }) => {
+            res.status(200).json({
+                status,
+                data
+            });
+        })
+        .catch((error)=>{
+            console.log(error.response.status)
+            if (error.response.status === 401) {
+                res.status(401).json({
+                    status:401,
+                    mensaje: 'Error en el token'
+            })
+            } else if (error.response.status === 400) {
+                res.status(400).json({
+                    status:400,
+                    mensaje: 'la id de juego no existe'
+            })
+            }
+        }
+        );
 }
 
 
@@ -63,5 +116,6 @@ module.exports = {
     getActores,
     getPelicula,
     getOrigenNombre,
-    getJuegos
+    getJuegos,
+    getTopCanalJuego
 };

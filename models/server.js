@@ -25,11 +25,7 @@ class Server{
     }
 
     routers(){
-        /* this.app.get('/', function (req, res) {
-            res.send('Home');
-        }); */
-
-        this.app.use('/api/v1/demo', require('../routes/demo'));
+        this.app.use('/api', require('../routes/demo'));
     }
 
 
