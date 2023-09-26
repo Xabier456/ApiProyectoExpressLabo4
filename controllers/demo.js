@@ -32,7 +32,6 @@ const getJuegos = (req = request, res = response) => {
 const getTopCanalJuego = (req = request, res = response) => {
     const { API_KEY, CLIENT_ID } = process.env;
     const { id } = req.params;
-    console.log(id)
     axios.get(`https://api.twitch.tv/helix/streams?game_id=${id}&first=1`, {
         headers: {
             "client-id": CLIENT_ID,
