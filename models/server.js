@@ -26,6 +26,10 @@ class Server{
 
     routers(){
         this.app.use('/api', require('../routes/demo'));
+
+        this.app.all('*', (req, res) => {
+            res.status(404).json({message:'no se encontro la ruta'})
+        })
     }
 
 

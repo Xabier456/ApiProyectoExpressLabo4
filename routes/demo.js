@@ -5,7 +5,7 @@ const rutas = Router();
 
 rutas.get('/juegos', getJuegos);
 rutas.get('/topcanaljuego/:id', getTopCanalJuego);
-rutas.get('/getTopCanalesJuegoIdioma/:id/:idioma', getTopCanalesJuegoIdioma);
+rutas.get('/getTopCanalesJuegoIdioma', getTopCanalesJuegoIdioma);
 
 
 module.exports = rutas;
