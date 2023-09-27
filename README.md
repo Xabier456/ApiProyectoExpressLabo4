@@ -8,6 +8,7 @@ https://drive.google.com/file/d/1QRUmrrU7Cz-bQ-1GsoJY5VFtlwx5p3RU/view?usp=drive
 
 
 # endpoints
+las peticiones a los endpoints usando la api local son los mismo nada mas que cambiando por localhost:1111/api
 
 ## obtener los 50 juegos/categorias con mas espectadores ahora
 GET https://api-render-express.onrender.com/api/juegos
